@@ -85,44 +85,91 @@ fromT' ""       = id
 data Op = P | R | L
   deriving Show
 
+
+f :: Triad -> [Op] -> Triad
+f root = foldl' f' root
+  where
+  f' x P = p x
+  f' x R = r x
+  f' x L = l x
+
 g :: Triad -> Triad -> [Op]
 g a b = fromJust $ foldl' step Nothing combinations
  where
   step :: (Maybe [Op]) -> [Op] -> Maybe [Op]
   step prev c =
-    let i' = foldl' (flip f) a c
+    let i' = f a c
     in if i' == b then Just $ go prev c else prev
 
   go (Just c1) c2 = if length c2 < length c1 then c2 else c1
   go Nothing c2   = c2
 
-  f P x = p x
-  f R x = r x
-  f L x = l x
 
   combinations :: [[Op]]
   combinations = do
     a <- allOp
     b <- allOp
     c <- allOp
-    return $ catMaybes [a,b,c]
+    d <- allOp
+    e <- allOp
+    return $ catMaybes [a,b,c,d, e]
   allOp = [Just P, Just R, Just L, Nothing]
 
 
+transform :: ([Op] -> [Op]) -> Triad -> Triad
+transform tr = f center . tr . g center
+  where
+    center = Minor 0
+
+rotate1 :: Op -> Op
+rotate1 P = R
+rotate1 R = L
+rotate1 L = P
+
+rotate2 :: Op -> Op
+rotate2 P = L
+rotate2 R = P
+rotate2 L = R
+
+swap1 :: Op -> Op
+swap1 P = P
+swap1 R = L
+swap1 L = R
+
+swap2 :: Op -> Op
+swap2 P = R
+swap2 R = P
+swap2 L = L
+
+weird1 :: Op -> Op
+weird1 P = R
+weird1 R = R
+weird1 L = L
+
+weird2 :: Op -> Op
+weird2 P = L
+weird2 R = R
+weird2 L = L
+
+weird3 :: Op -> Op
+weird3 P = R
+weird3 R = L
+weird3 L = R
+
 main :: IO ()
-main = print $ g (Minor 0) (Major 7)
--- withMidiSession $ \c -> do
---   --putStrLn "Hello, Haskell!--"
---   --print $ map (inKey D) (maj 0)
---   --x <- selectOutputDevice "IAC-Drivrutin" Nothing
---   foo c
---
---  where
---   foo c = do
---     str <- getLine
---     let i = Minor 0
---     mapM_ (playTriad c . flip fromT i) [""]
---     --foo c
+main = do
+ let gm = r $ l $ Minor 0
+ let dm = Minor 0
+ let aM = Major 7
+ --let chords = [Minor 0, Major 2, Major 1, Major 0]
+ --let chords = [dm, gm, aM]
+ let chords = [Minor 0, Major 10, Major 8, Major 7]
+ --mapM_ print $ map (transform (map rotate2)) [dm, gm, aM]
+ let chords' = map (transform (map rotate1)) (chords)
+
+ withMidiSession $ \c -> do
+   let i = Minor 0
+   mapM_ (playTriad c) chords'
 
 playTriad c t = do
   print t
@@ -131,7 +178,7 @@ playNotes c ns = do
   let home = 60
   forM_ ns $ \n ->
     send c $ MidiMessage 0 (NoteOn (n + home) 90)
-  threadDelay 1000000
+  threadDelay 1500000
   forM_ ns $ \n ->
     send c $ MidiMessage 0 (NoteOff (n + home) 90)
 
@@ -139,9 +186,8 @@ withMidiSession :: (Connection -> IO ()) -> IO ()
 withMidiSession f = do
   target <- (!! 0) <$> enumerateDestinations
   c <- openDestination target
+  forM_ [0..100]$ \n ->
+    send c $ MidiMessage 0 (NoteOff n 90)
   start c
   f c
   stop c
-
-
-

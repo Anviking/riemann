@@ -1,6 +1,6 @@
 module Simple where
 
-data NTriad = I | II | III | IV | V | VI | VII | Minor NTriad
+data NTriad = I | I# | II | II# III | IV | V | VI | VII | Minor NTriad
 
 toN (Minor I)   = min 0
 toN (Minor II)  = min 2
