@@ -60,6 +60,8 @@ executable riemann
   build-depends:       base >=4.12 && <4.13
                      , hmidi
                      , transformers
+                     , fmt
+                     , text
 
   -- Directories containing source files.
   hs-source-dirs:      src
