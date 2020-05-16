@@ -7,7 +7,7 @@ import           Triad
 spec :: Spec
 spec =
   describe "Negative Triads" $
-    golden (Major 0) (Minor 5)
+    golden (read "D") (read "Gm")
 
 golden :: Triad -> Triad -> Spec
 golden x x' = it ("Negative " ++ show x ++ " is " ++ show x') $
