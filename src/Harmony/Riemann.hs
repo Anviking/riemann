@@ -1,9 +1,11 @@
-module Riemann where
+module Harmony.Riemann where
 
 import           Data.List
 import           Data.Maybe (catMaybes, fromJust)
-import           Notes
 import           Prelude    hiding (min)
+
+import           Notes
+import           Triad
 
 -- | The P transformation exchanges a triad for its Parallel. In a Major Triad
 -- move the third down a semitone (C major to C minor), in a Minor Triad move

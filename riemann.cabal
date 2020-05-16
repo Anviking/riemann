@@ -63,7 +63,10 @@ library
                      , fmt
                      , text
 
-  exposed-modules: Notes
+  exposed-modules:     Notes
+                     , Triad
+                     , Harmony.Negative
+                     , Harmony.Riemann
 
   -- Directories containing source files.
   hs-source-dirs:      src
@@ -80,4 +83,4 @@ test-suite unit
                      , generic-arbitrary
                      , hspec
                      , riemann
-
+  other-modules: TriadSpec

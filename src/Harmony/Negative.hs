@@ -1,6 +1,7 @@
-module Negative where
+module Harmony.Negative where
 
 import           Notes
+import           Triad
 
 invertAround :: Note -> Note -> Note
 invertAround center x =
