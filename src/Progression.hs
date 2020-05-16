@@ -14,3 +14,5 @@ northKorea = [i, I, iv, III, V, i]
 circle = [i, iv, VII, III, VI, ii {- FIXME -}, V, I]
 
 wc2Human = [i, II, I#, I, i, iv, V, i]
+
+folia = [i, V, i, III, VII, i, V]
