@@ -1,7 +1,9 @@
 {-# LANGUAGE MagicHash #-}
 
 module Simple
-  ( i
+  (
+  -- * Minor chords
+    i
   , i#
   , ii
   , iii
@@ -9,17 +11,22 @@ module Simple
   , v
   , vi
   , vii
+  --- * Major chords
   , NTriad (I, I#, II, II#, III, IV, V, VI, VII)
+  -- * Diminished chords
+  , iidim
+  -- * Conversions
   , toN
   )
   where
 
 import           Notes
 import           Prelude hiding (min)
+import           Triad
 
 -- TODO: What scale / mode am I in? This is probably suboptimal.
 
-data NTriad = I | I# | II | II# | III | III# | IV | IV# | V | VI | VII | NMinor NTriad
+data NTriad = I | I# | II | II# | III | III# | IV | IV# | V | VI | VII | NMinor NTriad | NDim NTriad
 
 toN (NMinor I)    = Minor 0
 toN (NMinor I#)   = Minor 1
@@ -49,3 +56,5 @@ iv = NMinor IV
 v = NMinor V
 vi = NMinor VI
 vii = NMinor VII
+
+iidim = NDim II

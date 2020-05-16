@@ -67,6 +67,8 @@ library
                      , Triad
                      , Harmony.Negative
                      , Harmony.Riemann
+                     , Progression
+                     , Simple
 
   -- Directories containing source files.
   hs-source-dirs:      src
@@ -83,4 +85,8 @@ test-suite unit
                      , generic-arbitrary
                      , hspec
                      , riemann
-  other-modules: TriadSpec
+
+  other-modules:       TriadSpec
+                     , Harmony.RiemannSpec
+                     , Harmony.NegativeSpec
+

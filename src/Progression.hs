@@ -11,7 +11,7 @@ neapolitan = [i, I#, V]
 
 northKorea = [i, I, iv, III, V, i]
 
-circle = [i, iv, VII, III, VI, ii {- FIXME -}, V, I]
+circle = [i, iv, VII, III, VI, iidim, V, I]
 
 wc2Human = [i, II, I#, I, i, iv, V, i]
 
