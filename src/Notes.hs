@@ -1,14 +1,16 @@
-{-# LANGUAGE MagicHash #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE MagicHash     #-}
 module Notes where
 
 import           Control.Monad (msum)
 import           Data.List     (sort)
+import           GHC.Generics  (Generic)
 import           Prelude       hiding (min)
 
 type Note = Int
 
 data NamedNote = C | C# | D | Eb | E | F | F# | G | G# | A | Bb | B
-  deriving (Enum, Show)
+  deriving (Enum, Show, Generic)
 
 inKey :: NamedNote -> Note -> NamedNote
 inKey key n = toEnum ((fromEnum key + n) `mod` 12)
@@ -19,13 +21,15 @@ maj n = [n, n + 4, n + 7]
 min :: Note -> [Note]
 min n = [n, n + 3, n + 7]
 
+dim :: Note -> [Note]
+dim n = [n, n + 3, n + 6]
 
 toNotes (Minor n) = min n
 toNotes (Major n) = maj n
-
+toNotes (Dim n)   = dim n
 
 data Triad = Minor Note | Major Note | Dim Note
-  deriving Eq
+  deriving (Eq, Generic)
 
 instance Show Triad where
   show (Minor n) = show (inKey D n) <> "m"
