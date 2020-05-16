@@ -1,4 +1,5 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 module Triad where
 
 import           Data.List    (sort)
@@ -16,6 +17,17 @@ instance Show Triad where
   show (Minor n) = show (inKey D n) <> "m"
   show (Major n) = show (inKey D n)
   show (Dim n)   = show (inKey D n) <> "°"
+
+instance Read Triad where
+  readsPrec d str =
+    let
+      ((nn::NamedNote, r):_) = readsPrec d str
+      (q,r') = readQuality r
+    in [(q (fromEnum nn - 2), r')]
+    where
+      readQuality ('m':xs) = (Minor, xs)
+      readQuality ('°':xs) = (Dim, xs)
+      readQuality xs       = (Major, xs)
 
 -- | Construct a /major/ triad from a given root
 maj :: Note -> [Note]

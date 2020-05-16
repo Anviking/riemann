@@ -18,6 +18,9 @@ spec =
       property $ \(t1 :: Triad) (t2 :: Triad) ->
         (normalize t1 /= normalize t2) ==> (show t1 /= show t2)
 
+    it "read . show == id" $ property $ \(t::Triad) ->
+      normalize (read (show t)) === normalize t
+
 instance Arbitrary Triad where
   arbitrary = genericArbitrary
   shrink = genericShrink
