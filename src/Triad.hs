@@ -13,6 +13,11 @@ import           Notes
 data Triad = Minor Note | Major Note | Dim Note
   deriving (Eq, Generic)
 
+root :: Triad -> Note
+root (Minor r) = r
+root (Major r) = r
+root (Dim r)   = r
+
 instance Show Triad where
   show (Minor n) = show (inKey D n) <> "m"
   show (Major n) = show (inKey D n)
@@ -44,6 +49,7 @@ dim n = [n, n + 3, n + 6]
 toNotes (Minor n) = min n
 toNotes (Major n) = maj n
 toNotes (Dim n)   = dim n
+
 
 -- | Normalize the @Triad@ to a single octave.
 normalize = transposeTriad (`mod` 12)

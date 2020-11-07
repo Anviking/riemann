@@ -15,9 +15,9 @@ import           Prelude                    hiding (min)
 import           Progression
 import           Riemann
 import           Simple
-import           System.MIDI
-import           System.MIDI.Base
-import           System.MIDI.Utility
+--import           System.MIDI
+--import           System.MIDI.Base
+--import           System.MIDI.Utility
 
 import qualified Data.Text.IO               as TIO
 
