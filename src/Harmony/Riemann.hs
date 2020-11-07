@@ -8,38 +8,38 @@ import           Notes
 import           Triad
 
 -- | The P transformation exchanges a triad for its Parallel. In a Major Triad
--- move the third down a semitone (C major to C minor), in a Minor Triad move
--- the third up a semitone (C minor to C major)
+-- move the third down a semitone (D major to D minor), in a Minor Triad move
+-- the third up a semitone (D minor to D major)
 p :: Triad -> Triad
 p (Minor n) = Major n
 p (Major n) = Minor n
 
 -- | The R transformation exchanges a triad for its Relative. In a Major Triad
--- move the fifth up a tone (C major to A minor), in a Minor Triad move the
--- root down a tone (A minor to C major)
+-- move the fifth up a tone (F major to D minor), in a Minor Triad move the
+-- root down a tone (D minor to D major)
 r :: Triad -> Triad
 r (Minor n) = Major (n + 3)
 r (Major n) = Minor (n - 3)
 
 -- | The L transformation exchanges a triad for its Leading-Tone Exchange. In a
--- Major Triad the root moves down by a semitone (C major to E minor), in a
--- Minor Triad the fifth moves up by a semitone (E minor to C major)
+-- Major Triad the root moves down by a semitone (Bb major to D minor), in a
+-- Minor Triad the fifth moves up by a semitone (D minor to Bb major)
 l :: Triad -> Triad
 l (Minor n) = Major (n - 4)
 l (Major n) = Minor (n + 4)
 
 -- | The N (or Nebenverwandt) relation exchanges a major triad for its minor
--- subdominant, and a minor triad for its major dominant (C major and F minor).
+-- subdominant, and a minor triad for its major dominant (D major and G minor).
 -- The "N" transformation can be obtained by applying R, L, and P successively
 n = p . l . r
 
--- | The S (or Slide) relation exchanges two triads that share a third (C major
--- and C? minor); it can be obtained by applying L, P, and R successively in
+-- | The S (or Slide) relation exchanges two triads that share a third (C# major
+-- and D minor); it can be obtained by applying L, P, and R successively in
 -- that order
 s = r . p . l
 
--- | The H relation (LPL) exchanges a triad for its hexatonic pole (C major and
--- A♭ minor)
+-- | The H relation (LPL) exchanges a triad for its hexatonic pole (F# major and
+-- D minor)
 h = l . p . l
 
 toNotes (Minor n) = min n

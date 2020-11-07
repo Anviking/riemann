@@ -47,6 +47,15 @@ toN IV#           = Major 6
 toN V             = Major 7
 toN VI            = Major 8
 toN VII           = Major 10
+toN (NDim I)      = Minor 0
+toN (NDim I#)     = Minor 1
+toN (NDim II)     = Minor 2
+toN (NDim III)    = Minor 3
+toN (NDim III#)   = Minor 4
+toN (NDim IV)     = Minor 5
+toN (NDim V)      = Minor 7
+toN (NDim VI)     = Minor 8
+toN (NDim VII)    = Minor 10
 
 i = NMinor I
 i# = NMinor I#
